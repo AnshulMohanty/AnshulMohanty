@@ -1,0 +1,29 @@
+name: Redraw contributions
+
+on:
+  schedule:
+    - cron: "17 2 * * *"   # every day, 07:47 IST
+  workflow_dispatch:        # or run it by hand from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Draw the contribution and stack cards
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional. Needed only if your profile is private (GitHub's own graph hidden):
+          # a personal access token with read:user, saved as a repository secret.
+          CONTRIB_TOKEN: ${{ secrets.CONTRIB_TOKEN }}
+        run: python3 scripts/contributions.py "${{ github.repository_owner }}"
+      - name: Commit if they changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/contributions-*.svg assets/stack-*.svg
+          git diff --cached --quiet || git commit -m "Redraw contribution and stack cards"
+          git push
