@@ -1,0 +1,8 @@
+Fonts in this folder are ASCII subsets made for embedding in the profile SVGs.
+Under the SIL Open Font License, subsets are modified versions, so both GitHub
+families are renamed and do not use their Reserved Font Names:
+
+  monasans-*.woff2     subset of Mona Sans (OFL-MonaSans.txt), renamed "Profile Sans"
+  monaspace-400.woff2  subset of Monaspace Neon (OFL-Monaspace.txt), renamed "Profile Mono"
+
+The karate motion study (scripts/media/karate-src.svg) carries its own embedded font.
